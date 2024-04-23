@@ -7,12 +7,12 @@
 
 
 int main() {
-    char* string = "I wanna suggon some dick";
+    char* string = "Cats are some amazing creatures";
 
     for (int i = 0; i < 1; i++) {
 
         size_t new_len = 0;
-        char* str = tiny_encrypt(_CBC, "meow", 4, string, 25, &new_len);
+        char* str = tiny_encrypt(_CBC, "meow", 4, string, 32, &new_len);
         printf("%s\n", str);
         fflush(stdout);
 
@@ -24,7 +24,7 @@ int main() {
             break;
         }
         
-        //printf("%s\n", str2);
+        printf("%s\n", str2);
         for (int i = 0; i < len; i++) putchar(str2[i]);
 
 
