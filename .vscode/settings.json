@@ -1,0 +1,9 @@
+{
+    "makefile.launchConfigurations": [
+        {
+            "cwd": "/root/project 3/pain",
+            "binaryPath": "/root/project 3/pain/lockbox",
+            "binaryArgs": []
+        }
+    ]
+}
