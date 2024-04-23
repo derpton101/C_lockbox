@@ -1,5 +1,6 @@
 #pragma once
 
+#include <stddef.h>
 
 //ECB
 //CBC
@@ -16,5 +17,5 @@ enum Algo {
 
 char* sha256_hash(char* s, size_t s_);
 
-char* tiny_encrypt(enum Algo a, char* k, size_t k_, char* t, size_t t_);
-char* tiny_decrypt(enum Algo a, char* k, size_t k_, char* t, size_t t_);
+char* tiny_encrypt(enum Algo a, char* k, size_t k_, char* t, size_t t_, size_t* o_);
+char* tiny_decrypt(enum Algo a, char* k, size_t k_, char* t, size_t t_, size_t* o_);

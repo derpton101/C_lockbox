@@ -5,30 +5,33 @@
 
 #include "aesquick.h"
 
-char* sha256_hash(char* string, int string_size);
+
 int main() {
-    char* string = "CauLk";
-    char* hash = sha256_hash(string, 5);    
-    printf("%s\n%s\n", hash, string);
-    free(hash);
+    char* string = "I wanna suggon some dick";
 
+    for (int i = 0; i < 1; i++) {
+
+        size_t new_len = 0;
+        char* str = tiny_encrypt(_CBC, "meow", 4, string, 25, &new_len);
+        printf("%s\n", str);
+        fflush(stdout);
+
+
+        size_t len = 0;
+        char* str2 = tiny_decrypt(_CBC, "meow", 4, str, new_len, &len);
+        if (str2 == 0 || len == 0) {
+            printf("Fail to decrypt!");
+            break;
+        }
+        
+        //printf("%s\n", str2);
+        for (int i = 0; i < len; i++) putchar(str2[i]);
+
+
+        free(str);
+        free(str2);
+
+
+    }
     return 0;
-}
-
-
-
-char* sha256_hash(char* string, int string_size) {
-
-    SHA256_CTX* ctx = malloc(sizeof(SHA256_CTX));
-
-    SHA256_Init(ctx);
-    SHA256_Update(ctx, string, string_size);
-
-    char* out = malloc(sizeof(char) * (32 + 1));
-    out[32] = 0;
-
-    SHA256_Final(out, ctx);
-
-    free(ctx);
-    return out;
 }
