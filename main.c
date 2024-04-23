@@ -25,7 +25,7 @@ int main() {
         }
         
         printf("%s\n", str2);
-        for (int i = 0; i < len; i++) putchar(str2[i]);
+        //for (int i = 0; i < len; i++) putchar(str2[i]);
 
 
         free(str);
