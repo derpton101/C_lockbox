@@ -170,6 +170,8 @@ char* tiny_decrypt(enum Algo a, char* key, size_t key_len, char* text, size_t te
 
     if (back <= 0 || back == -1) {
         //printf("No zero found: returning NULL\n");
+
+        EVP_CIPHER_CTX_free(ctx);
         free(_output);
         *out_len = 0;
         return NULL;
