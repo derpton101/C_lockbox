@@ -125,9 +125,6 @@ char* tiny_encrypt(enum Algo a, char* key, size_t key_len, char* text, size_t te
     return out;
 }
 
-
-
-
 char* tiny_decrypt(enum Algo a, char* key, size_t key_len, char* text, size_t text_len, size_t* out_len) {
     char* k_in = sha256_hash(key, key_len);
 
@@ -165,7 +162,7 @@ char* tiny_decrypt(enum Algo a, char* key, size_t key_len, char* text, size_t te
 
     *out_len = f_ + u_;
 
-    size_t back = *out_len;
+    size_t back = *out_len - 1;
     while (_output[back] && back >= 0) (back)--;
 
     if (back <= 0 || back == -1) {
