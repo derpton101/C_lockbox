@@ -12,7 +12,6 @@ int file_en(char* file, char* key, size_t key_, char* out_name, enum Algo a) {
     
     char* data = malloc(sizeof (char) * len);
     size_t read = fread(data, 1, len, f);
-    printf("%d:%d\n", len, read);
 
     if (read != len) {
     
@@ -88,10 +87,7 @@ int file_dec(char* file, char* key, int key_, char* out_name, enum Algo a) {
 
 int main() {
 
-    for (int i = 0; i < 10000; i++) {
-        file_en("texta", "carp", 5, "textb", _CFB);
-        file_dec("textb", "carp", 5, "textc", _CFB);
-    }
+    
 
     return 0;
 }
