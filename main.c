@@ -1,37 +1,97 @@
 #include <stdio.h>
 #include <stdlib.h>
-
 #include <openssl/sha.h>
-
 #include "aesquick.h"
+
+int file_en(char* file, char* key, size_t key_, char* out_name, enum Algo a) {
+    FILE* f = fopen(file, "rb");
+
+    size_t len = 0;
+    while (fgetc(f) != -1) len++;
+    fseek(f, 0, SEEK_SET);
+    
+    char* data = malloc(sizeof (char) * len);
+    size_t read = fread(data, 1, len, f);
+    printf("%d:%d\n", len, read);
+
+    if (read != len) {
+    
+        printf("Failed read!\n");
+        fflush(stdout);
+
+        free(data);
+        fclose(f);
+
+        return -1;
+    }
+    
+    fclose(f);
+
+    size_t out_ = 0;
+    char* output = tiny_encrypt(a, key, key_, data, len, &out_);    
+
+    FILE* out_f = fopen(out_name, "wb");
+
+    if (fwrite(output, 1, out_, out_f) != out_) {
+        printf("Failed write!");
+        fflush(stdout);
+        fclose(out_f);
+        free(data);
+        return -1;
+    } 
+    free(data);
+    fclose(out_f);
+    free(output);
+    return 0;
+}
+int file_dec(char* file, char* key, int key_, char* out_name, enum Algo a) {
+    FILE* f = fopen(file, "rb");
+
+    size_t len = 0;
+    while (fgetc(f) != -1) len++;
+    fseek(f, 0, SEEK_SET);
+    
+    char* data = malloc(sizeof (char) * len);
+
+    if (fread(data, 1, len, f) != len) {
+        printf("Failed read!\n");
+        fflush(stdout);
+
+        free(data);
+        fclose(f);
+
+        return -1;
+    }
+    
+    fclose(f);
+
+    size_t out_ = 0;
+    char* output = tiny_decrypt(a, key, key_, data, len, &out_);    
+
+    FILE* out_f = fopen(out_name, "wb");
+
+    if (fwrite(output, 1, out_, out_f) != out_) {
+        printf("Failed write!");
+        fflush(stdout);
+        fclose(out_f);
+        free(data);
+        return -1;
+    } 
+    free(data);
+    fclose(out_f);
+    free(output);
+    return 0;
+}
+
+
 
 
 int main() {
-    char* string = "Cats are some amazing creatures";
 
-    for (int i = 0; i < 1; i++) {
-
-        size_t new_len = 0;
-        char* str = tiny_encrypt(_CBC, "meow", 4, string, 32, &new_len);
-        printf("%s\n", str);
-        fflush(stdout);
-
-
-        size_t len = 0;
-        char* str2 = tiny_decrypt(_CBC, "meow", 4, str, new_len, &len);
-        if (str2 == 0 || len == 0) {
-            printf("Fail to decrypt!");
-            break;
-        }
-        
-        printf("%s\n", str2);
-        //for (int i = 0; i < len; i++) putchar(str2[i]);
-
-
-        free(str);
-        free(str2);
-
-
+    for (int i = 0; i < 10000; i++) {
+        file_en("texta", "carp", 5, "textb", _CFB);
+        file_dec("textb", "carp", 5, "textc", _CFB);
     }
+
     return 0;
 }
